@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import Products, Addresses, PriceLists, Customers, Naklads, Zakaz
 
 
@@ -14,7 +15,7 @@ class CustomerForm(forms.ModelForm):
 		fields = ['customer_name']
 		
 		
-class PriceListForm(forms.ModelForm): #-----------------------
+class PriceListForm(forms.ModelForm):
 	class Meta:
 		model = PriceLists
 		fields = ['customer','product', 'price']
@@ -29,10 +30,20 @@ class ProductForm(forms.ModelForm):
 class NakladForm(forms.ModelForm):
 	class Meta:
 		model = Naklads
-		fields = ['customer',]
+		fields = 'customer',
+		widgets = {
+			'customer': forms.Select(attrs={'class': 'input'}),
+		}
 
 
 class ZakazForm(forms.ModelForm):
+
 	class Meta:
 		model = Zakaz
-		fields = ('product', 'quantity', 'price')
+		fields = 'product', 'quantity', 'price'
+		widgets = {
+			'product': forms.Select(attrs={'class': 'input'}),
+			'quantity': forms.TextInput(attrs={'class': 'input'}),
+			'price': forms.TextInput(attrs={'class': 'input'}),
+		}
+

@@ -1,4 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+
 from .forms import (AddressForm, CustomerForm, PriceListForm, ProductForm,
 	NakladForm, ZakazForm)
 
@@ -23,7 +25,8 @@ def settings(request):
 #Addresses
 def list_address(request):
 	context = {'addresses':Addresses.objects.all(),}
-	return render(request, template_name='buh/catalog/addresses/address.html', context=context)
+	return render(request, template_name='buh/catalog/addresses/address.html',
+				  context=context)
 
 
 def create_address(request):
@@ -70,6 +73,7 @@ def list_pricelist(request):
 	context = {'pricelists':PriceLists.objects.all()}
 	return render()
 
+
 def create_pricelist(request):
 	form = PriceListForm(request.POST or None)
 	if form.is_valid():
@@ -77,18 +81,20 @@ def create_pricelist(request):
 		return redirect('list_pricelist')
 	return render()
 
+
 def delete_pricelist(request):
 	return render()
 
+
 def save_pricelist(request):
 	return render()
-
 
 
 #Products
 def list_product(request):
 	context = {'products':Products.objects.all()}
 	return render()
+
 
 def create_product(request):
 	form = ProductForm(request.POST or None)
@@ -97,8 +103,10 @@ def create_product(request):
 		return redirect('list_product')
 	return render()
 
+
 def delete_product(request):
 	return render()
+
 
 def save_product(request):
 	return render()
@@ -106,14 +114,15 @@ def save_product(request):
 
 #Naklad + Zakaz
 def list_naklad(request):
-	context = {	'naklads':Naklads.objects.all(),
-				'zakaz':Zakaz.objects.all()
+	context = {
+		'naklads': Naklads.objects.all(),
+		'zakaz': Zakaz.objects.all(),
 	}
-	return render(request, template_name='buh/naklads/naklad.html', context=context)
+	return render(request, template_name='buh/naklads/naklad.html',
+				  context=context)
 
 
 def create_naklad(request):
-	print("NEW")
 	template = 'buh/naklads/new_naklad.html'
 	form_naklad = NakladForm(request.POST or None)
 	form_zakaz = ZakazForm(request.POST or None)
@@ -136,3 +145,13 @@ def delete_naklad(request):
 
 def save_naklad(request):
 	return render()
+
+
+def get_price(request):
+	product_id = request.GET.get('product_id', None)
+	product = PriceLists.objects.filter(product=product_id).all()
+	price = product.latest().price if product.exists() else ''
+	response = {
+		'price': price
+	}
+	return JsonResponse(response)

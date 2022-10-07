@@ -14,19 +14,20 @@ class Naklads(models.Model):
 
 			
 class Zakaz(models.Model):
-	product = models.ForeignKey('Products', on_delete=models.PROTECT, verbose_name = "Товар")
-	quantity = models.IntegerField()
+	product = models.ForeignKey('Products', on_delete=models.PROTECT,
+								verbose_name="Товар")
+	quantity = models.IntegerField(verbose_name="Количество", default=1)
 	naklad = models.ForeignKey('Naklads', on_delete=models.CASCADE, verbose_name = "Накладная")
-	price = models.IntegerField() # СВЯЗАТЬ ПРАЙС-ЛИСТ 
+	price = models.IntegerField(verbose_name="Стоимость") # СВЯЗАТЬ ПРАЙС-ЛИСТ
 	
 	@property
 	def summa(self):
-		return self.price*self.quantity
+		return self.price * self.quantity
 
 	class Meta:
 		verbose_name = "Заказ"
 		verbose_name_plural = "Заказы"
-		ordering = ['id']
+		ordering = 'id',
 
 
 class PriceLists(models.Model):
@@ -38,7 +39,8 @@ class PriceLists(models.Model):
 	class Meta:
 		verbose_name = "Прайс-лист"
 		verbose_name_plural = "Прайс-листы"
-		ordering = ['id']
+		get_latest_by = 'date_update',
+		ordering = 'id',
 		
 	#def __str__(self):         не выводит имя----------------------------------------
 		#return self.customer

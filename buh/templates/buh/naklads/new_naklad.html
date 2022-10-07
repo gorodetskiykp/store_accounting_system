@@ -1,22 +1,55 @@
-{% extends 'buh/layout_buh.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Новая накладная{% endblock %}
 
-{% block 2nd_nav %}
-{% endblock 2nd_nav %}
+{% block page_title %}
+    Новая накладная
+{% endblock %}
 
-
-{% block body %}
-<h1>Новая накладная</h1>
-
+{% block content %}
 <form method="POST" action="{% url 'buh:create_naklad' %}">
-{% csrf_token %}
-{{ form_naklad.as_p }}
-
-<hr />
-{{ form_zakaz.as_p }}
-
-<button type="submit">Сохранить</button>
+    {% csrf_token %}
+    <div class="block">
+        {{ form_naklad.as_p }}
+    </div>
+    <div class="block">
+        {{ form_zakaz.as_p }}
+    </div>
+    <div class="block">
+        <button type="submit" class="button is-primary is-outlined">Сохранить</button>
+    </div>
 </form>
 
+{% endblock %}
+
+{% block js %}
+  <script>
+      $(document).ready(function () {
+          $('#id_product').change(function() {
+
+              {#var target = '#' + $(this).attr('rel');#}
+              var item = $(this).val();
+              console.log(item)
+              if (item != '') {
+                  $.ajax({
+                      data: {"product_id": item},
+                      url: "{% url 'buh:get_price' %}",
+                      success: function (response) {
+                          console.log(response.price)
+                           $('#id_price').val(response.price);
+                  {#        if (response.availability == true) {#}
+                  {#            $(target).css('color', 'green');#}
+                  {#        } else {#}
+                  {#            $(target).css('color', 'red');#}
+                  {#            $(item).removeAttr('href').css("cursor","not-allowed");#}
+                  {#            // $(item).remove();#}
+                  {#        }#}
+                      }
+                  });
+              } else {
+                  $('#id_price').val('');
+              };
+          });
+      });
+  </script>
 {% endblock %}
