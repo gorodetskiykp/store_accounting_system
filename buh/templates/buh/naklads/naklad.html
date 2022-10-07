@@ -1,0 +1,34 @@
+{% extends 'buh/layout_buh.html' %}
+
+{% block title %}Накладные{% endblock %}
+
+{% block 2nd_nav %}
+	<nav>
+		<ul>
+			<li><a href="/buh/naklad/">Накладные</a></li>
+			<li><a href="/buh/raznos/">Разноска</a></li>
+			<li><a href="/buh/settings/">Настройки</a></li>
+		</ul>
+	</nav>
+{% endblock 2nd_nav %}
+
+
+{% block body %}
+<h1>Бухгалтерия</h1>
+
+<table>
+	<tr>
+		<th>Наименование</th>
+		<th>Кол-во</th>
+		<th>Товар</th>
+	</tr>
+{% for z in zakaz %}
+	<tr>
+		<td>{{ z.naklad.id }}</td>
+		<td>{{ z.naklad.customer }}</td>
+		<td>{{ z.naklad.product }}</td>
+	</tr>
+{% endfor %}
+
+</table>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title> Адреса </title>
+<link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+</head>
+
+<body>
+
+<header>
+	<nav>
+		<ul>
+			<li><a href="/">Главная</a></li>
+			<li><a href="/buh">Бухгалтерия</a></li>
+			<li><a href="raznos/">Разноска</a></li>
+			<li><a href="/admin">Админка</a></li>
+		</ul>
+		</ul>
+	</nav>
+	
+	<nav>
+		<ul>
+			<li><a href="/buh">Бухгалтерия</a></li>
+			<li><a href="/buh/settings/">Настройки</a></li>
+		</ul>
+		</ul>
+	</nav>
+	
+<table>
+</header>
+{% for addr in addresses %}
+	<tr>
+		<td><a href = {{ addr.id }}>{{ addr.address }}</a></td>
+		<td>{{ addr.id }}</td>
+	</tr>
+{% endfor %}
+</table>
+
+  
+{{ AddressForm }}
+</body>
+
+</html>

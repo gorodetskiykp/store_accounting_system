@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}{% endblock title %}</title>
+<link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+</head>
+
+
+
+<body>
+<header>
+	<nav>
+		<ul>
+			<li><a href="/">Главная</a></li>
+			<li><a href="/buh/">Бухгалтерия</a></li>
+			<li><a href="/admin/">Админка</a></li>
+		</ul>
+	</nav>
+</header>
+<main>
+{% block 2nd_nav %}
+
+{% endblock 2nd_nav %}
+
+
+
+
+{% block body %}
+{% endblock body %}
+</main>
+</body>
+
+</html>

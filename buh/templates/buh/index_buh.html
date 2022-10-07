@@ -1,0 +1,37 @@
+{% extends 'buh/layout_buh.html' %}
+
+{% block title %}Бухгалтерия{% endblock %}
+
+{% block 2nd_nav %}
+	<nav>
+		<ul>
+			<li><a href="/buh/naklad/">Накладные</a></li>
+            <li><a href="{% url 'buh:create_naklad' %}">Новая накладная</a></li>
+			<li><a href="/buh/raznos/">Разноска</a></li>
+			<li><a href="/buh/settings/">Настройки</a></li>
+		</ul>
+	</nav>
+{% endblock 2nd_nav %}
+
+
+{% block body %}
+<h1>Бухгалтерия</h1>
+
+<table>
+	<tr>
+		<th>Наименование</th>
+		<th>Кол-во</th>
+	</tr>
+{% for prod in products %}
+	<tr>
+		<td>{{ prod.product_name }}</td>
+		<td>{{ prod.volume }}</td>
+	</tr>
+{% endfor %}
+<form action="{% url 'buh:create_address' %}" method = "post">
+	{% csrf_token %}
+	{{ dorm.as_p }}
+	<button> </button>
+</form>
+</table>
+{% endblock %}

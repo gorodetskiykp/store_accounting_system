@@ -1,0 +1,22 @@
+{% extends 'buh/layout_buh.html' %}
+
+{% block title %}Новая накладная{% endblock %}
+
+{% block 2nd_nav %}
+{% endblock 2nd_nav %}
+
+
+{% block body %}
+<h1>Новая накладная</h1>
+
+<form method="POST" action="{% url 'buh:create_naklad' %}">
+{% csrf_token %}
+{{ form_naklad.as_p }}
+
+<hr />
+{{ form_zakaz.as_p }}
+
+<button type="submit">Сохранить</button>
+</form>
+
+{% endblock %}
